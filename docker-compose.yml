@@ -11,16 +11,17 @@ services:
       - PGDATABASE=pgstac
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U username -d pgstac"]
+      interval: 1s
+      timeout: 1s
+      retries: 20
   migrate:
     build:
       context: .
     environment:
       - SQITCH_TARGET=db:pg://username:password@database:5432/pgstac
     depends_on:
-      - database
+      database:
+        condition: service_healthy
     command: sqitch deploy
-    healthcheck:
-      test: pg_isready -h database -p 5432 -u username
-      interval: 10s
-      timeout: 5s
-      retries: 5
