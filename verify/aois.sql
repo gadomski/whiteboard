@@ -1,7 +1,5 @@
--- Verify pgstac-external-tables:aois on pg
-
 BEGIN;
 
--- XXX Add verifications here.
+SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'business';
 
 ROLLBACK;
