@@ -16,6 +16,20 @@ services:
       interval: 1s
       timeout: 1s
       retries: 20
+  api:
+    image: ghcr.io/stac-utils/stac-fastapi-pgstac:main
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASS=password
+      - POSTGRES_HOST_READER=database
+      - POSTGRES_HOST_WRITER=database
+      - POSTGRES_PORT=5432
+      - POSTGRES_DBNAME=pgstac
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - 8080:8080
   migrate:
     build:
       context: .
