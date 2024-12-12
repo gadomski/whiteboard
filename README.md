@@ -15,5 +15,6 @@ Then:
 uv sync
 docker compose up -d
 scripts/load  # This will take a while, it downloads the HUC2 boundaries
-jupyter execute pgstac-external-table.ipynb
 ```
+
+Then, open up the notebook and execute it.
