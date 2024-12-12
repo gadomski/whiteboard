@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+set -e
+
+scripts=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+root=$(dirname $scripts)
+data="$root/data"
+hucs_zip="$data/WBD_National_GPKG.zip" 
+hucs="$data/WBD_National_GPKG.gpkg" 
+
+if ! [ -f "$hucs_zip" ]; then
+    curl https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/National/GPKG/WBD_National_GPKG.zip > "$hucs_zip"
+fi
+
+if ! [ -f "$hucs" ]; then
+    unzip "$hucs_zip" -d "$data"
+fi
+
+ogr2ogr -f "PostgreSQL" \
+    PG:"dbname=pgstac user=username password=password host=localhost" \
+    "$hucs" WBDHU2 \
+    -nln business.aois

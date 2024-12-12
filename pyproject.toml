@@ -1,0 +1,7 @@
+[project]
+name = "whiteboard"
+version = "0.0.0"
+description = "Sketches and such"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["ipykernel>=6.29.5", "pgstacrs>=0.1.0", "pystac-client>=0.8.5"]
