@@ -15,6 +15,7 @@ dependencies = [
     "pystac-client>=0.8.5",
     "shapely>=2.0.6",
     "stacrs>=0.3.0",
+    "tqdm[notebook]>=4.67.1",
 ]
 
 [dependency-groups]
