@@ -1,0 +1,26 @@
+services:
+  database:
+    build:
+      context: .
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=pgstac
+      - PGUSER=username
+      - PGPASSWORD=password
+      - PGDATABASE=pgstac
+    ports:
+      - 5432:5432
+  migrate:
+    build:
+      context: .
+    environment:
+      - SQITCH_TARGET=db:pg://username:password@database:5432/pgstac
+    depends_on:
+      - database
+    command: sqitch deploy
+    healthcheck:
+      test: pg_isready -h database -p 5432 -u username
+      interval: 10s
+      timeout: 5s
+      retries: 5
